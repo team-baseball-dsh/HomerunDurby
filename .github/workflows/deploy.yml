@@ -22,10 +22,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
       - name: Restore Library Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: Library
           key: Library-build-WebGL
@@ -33,7 +33,7 @@ jobs:
             Library-
             Library-build-
             
-      - uses: game-ci/unity-builder@v2
+      - uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -41,7 +41,7 @@ jobs:
         with:
           targetPlatform: WebGL
           
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: build-WebGL
           path: build/WebGL
@@ -60,9 +60,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}     
     steps:
       - name: Checkout Code 
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: build-WebGL
           path: build
