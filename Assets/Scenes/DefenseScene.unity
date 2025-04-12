@@ -2767,6 +2767,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OutBoundLimit: 10
   BorderRectT: {fileID: 1678288275}
+  Speed: 500
+  resultUI: {fileID: 1216566526}
+  BallSpeedEvent: {fileID: 11400000, guid: db2e7e71be0826c4aa32a36e197a10e9, type: 2}
   InputReader: {fileID: 11400000, guid: e31afdc9be284e047bb4bd85c6db9163, type: 2}
   AIReader: {fileID: 0}
   OffsetCursorObject: {fileID: 1943994763}
@@ -2825,7 +2828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c868efc484cb346941df4d8efd167f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GameEvent: {fileID: 11400000, guid: 24a00197f0cf01144bfea61efb4b4019, type: 2}
+  m_GameEvent: {fileID: 0}
   m_UnityEventResponse:
     m_PersistentCalls:
       m_Calls:
@@ -2906,6 +2909,85 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 13ae24cee2bffba4aaeb6c5063e262bd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9035850883732af4daf57c888e1fefce, type: 3}
+--- !u!1 &808315063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 808315064}
+  - component: {fileID: 808315066}
+  - component: {fileID: 808315065}
+  m_Layer: 5
+  m_Name: BallSpeedText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &808315064
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808315063}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9257274, y: 0.9257274, z: 0.9257274}
+  m_Children: []
+  m_Father: {fileID: 1216566524}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000015258789, y: 63.9684}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &808315065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808315063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: km/h
+--- !u!222 &808315066
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808315063}
+  m_CullTransparentMesh: 1
 --- !u!1001 &894545504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6832,6 +6914,10 @@ PrefabInstance:
       propertyPath: m_UnityEventResponse.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2137351406, guid: 20e49e11df677af4a957204e8a2cc080, type: 3}
+      propertyPath: m_SpeedText
+      value: 
+      objectReference: {fileID: 808315065}
     - target: {fileID: 5912814648894489686, guid: 20e49e11df677af4a957204e8a2cc080, type: 3}
       propertyPath: m_Name
       value: ScoreCanvas
@@ -6926,6 +7012,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20e49e11df677af4a957204e8a2cc080, type: 3}
+--- !u!224 &1216566524 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5912814648894489690, guid: 20e49e11df677af4a957204e8a2cc080, type: 3}
+  m_PrefabInstance: {fileID: 1216566523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1216566525 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2137351401, guid: 20e49e11df677af4a957204e8a2cc080, type: 3}
+  m_PrefabInstance: {fileID: 1216566523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1216566526 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2137351406, guid: 20e49e11df677af4a957204e8a2cc080, type: 3}
+  m_PrefabInstance: {fileID: 1216566523}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216566525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003c048ade2114e488e35ffe71ab26d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1216566527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216566525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ab4fd47c239c846b41ff6ba8074125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GameEvent: {fileID: 11400000, guid: db2e7e71be0826c4aa32a36e197a10e9, type: 2}
+  m_UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1216566526}
+        m_TargetAssemblyTypeName: ResultUI, Assembly-CSharp
+        m_MethodName: SetBallSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1223306789 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100124, guid: 9035850883732af4daf57c888e1fefce, type: 3}
@@ -6956,6 +7091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629772773ec4c4042888485d88aa8677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_WaitTime: 5
 --- !u!114 &1223306792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9015,6 +9151,7 @@ MonoBehaviour:
   BatterAnimator: {fileID: 1544962315}
   PivotRectT: {fileID: 1051822223}
   BatGripT: {fileID: 667445391}
+  SwingFinishedEvent: {fileID: 0}
 --- !u!114 &1544962318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15006,12 +15143,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OutBoundLimit: 0
   BorderRectT: {fileID: 1678288275}
+  Speed: 500
   BatterInput: {fileID: 11400000, guid: 254a48e8d6e657b4c885c3e0da0fff38, type: 2}
   SwingEvent: {fileID: 11400000, guid: 14a72d7422bb8dc4c8dada0f27b12149, type: 2}
   BallExitVelEvent: {fileID: 11400000, guid: 20dc3691580ce134c90cbdab67f49361, type: 2}
   MeatCursor: {fileID: 1673093088}
   BuntArrow: {fileID: 1433007446}
   PivotRectT: {fileID: 1051822223}
+  m_CheckCollision: 0
+  m_AnimationFinisehd: 1
 --- !u!136 &2023097218
 CapsuleCollider:
   m_ObjectHideFlags: 0

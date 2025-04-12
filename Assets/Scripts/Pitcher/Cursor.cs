@@ -6,6 +6,10 @@ namespace Pitcher
 {
     public class Cursor : BaseCursor
     {
+        public ResultUI resultUI;
+
+        public FloatEvent BallSpeedEvent;
+
         public PitcherInputReader InputReader;
         public PitcherAI AIReader;
 
@@ -109,6 +113,21 @@ namespace Pitcher
             //Create the path of ball travelling
             Vector3 Goal = m_Ball.InstantiateBallPath(m_SelectedType, ReleasePoint.position, realWorldCursorPos);
 
+            if (resultUI != null)
+            {
+                resultUI.SetBallSpeed(m_SelectedType.MaxSpeed);
+                Debug.Log("구속을 ResultUI에 직접 전달 : " + m_SelectedType.MaxSpeed);
+            }
+            else
+            {
+                Debug.LogError("resultUI 참조가 없습니다!");
+            }
+
+            if(BallSpeedEvent != null)
+            {
+                BallSpeedEvent.Raise(m_Ball.GetBallSpeed());
+            }
+
             m_OffsetInterval = (m_OffsetCursorRectT.position - m_Cursor.position) / m_Ball.PointCounts;
             
 
@@ -120,6 +139,8 @@ namespace Pitcher
 
             //start the ball moving
             m_Ball.StartMove();
+
+            Debug.Log("구속 전달: " + m_Ball.GetBallSpeed() + " km/h");
         }
 
         private Vector3 CalculateOffsetCursor()

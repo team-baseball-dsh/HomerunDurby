@@ -52,7 +52,12 @@ namespace UI.Score
             Debug.Log("STRIKE: " + m_CurrentStrikeCount);
             Debug.Log("BALL:   " + m_CurrentBallCount);
             Debug.Log("OUT:    " + m_CurrentOutCount);
-            OnUpdate.Invoke();
+
+            if (OnUpdate != null)
+            {
+                OnUpdate.Invoke();
+            }
+            
         }
 
         public void Reset()

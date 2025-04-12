@@ -9,39 +9,41 @@ namespace Result
     
     public class ResultManager : MonoBehaviour
     {
-        public Text MaxDistanceText;
+        public Text ScoreText;
         public Text TempDistanceText;
         public Text HRCountText;
 
         private uint m_HRCount = 0;
-        private int m_MaxDistance = 0;
+        private int m_Score = 0;
         private int m_Distance = 0;
         private ResultState m_CurrentResult = ResultState.Ground;
 
         public void Start()
         {
-            MaxDistanceText.text = m_MaxDistance + "m";
+            ScoreText.text = "" + m_Score;
             HRCountText.text = "" + m_HRCount;
         }
 
         public void UpdateHR(int result)
         {
             m_CurrentResult = (ResultState)result;
-            
+
             if (m_CurrentResult == ResultState.HR)
             {
-                HRCountText.text = "" + ++ m_HRCount;
+                HRCountText.text = "" + ++m_HRCount;
+
+                m_Score += m_Distance * 2;
             }
+            else if (m_CurrentResult == ResultState.Ground)
+            {
+                m_Score += m_Distance;
+            }
+
+            ScoreText.text = "" + m_Score;
         }
 
         public void UpdateMaxDistance()
         {
-            if(m_CurrentResult == ResultState.HR && m_Distance > m_MaxDistance)
-            {
-                m_MaxDistance = m_Distance;
-                m_Distance = 0;
-            }
-            MaxDistanceText.text = Mathf.RoundToInt(m_MaxDistance) + "m";
             m_CurrentResult = ResultState.Ground;
         }
 
@@ -54,7 +56,8 @@ namespace Result
         public void Reset()
         {
             m_HRCount = 0;
-            m_MaxDistance = 0;
+            m_Score = 0;
+            ScoreText.text = "" + m_Score;
         }
     }
 }

@@ -27,6 +27,9 @@ public class Ball : MonoBehaviour
     private const int NUM_CTRL_PTS = 4;
     private const int EXTRA_PTS = 4; //extra points for bezier curve to cross through the ui canvas
 
+    // ball velocity
+    private float m_BallSpeed = 0f;
+
     //multiplier for curve and drop offset for breaking balls
     private const float VERT_MULTIPLIER = 0.0015f;
     private const float HORI_MULTIPLIER = 0.0015f;
@@ -59,7 +62,7 @@ public class Ball : MonoBehaviour
             return;
         }
 
-        m_Time += Time.deltaTime * 3.0f ;
+        m_Time += Time.deltaTime;
 
         if (m_Index < m_BallPath.PathPoints.Count && m_Time > m_Speed)
         {
@@ -84,6 +87,8 @@ public class Ball : MonoBehaviour
         m_BallPath = CreatePath(selectedType, releasePt, targetPt);
      
         PointCounts = m_BallPath.PathPoints.Count;
+
+        m_BallSpeed = selectedType.MaxSpeed;
 
         //Speed
         //total distance / number of bezier path pts / speed of ball in m/s
@@ -175,6 +180,12 @@ public class Ball : MonoBehaviour
     public void OnDestroy()
     {
         BallFinishEvent.Raise((int)m_ResultState);
+    }
+
+    // getter for velocity info
+    public float GetBallSpeed()
+    {
+        return m_BallSpeed;
     }
 }
 
