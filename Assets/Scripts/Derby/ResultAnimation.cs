@@ -1,16 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+// 결과 애니메이션에 관련한 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-04-29
 
 namespace Result
 {
     public class ResultAnimation : MonoBehaviour
     {
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // component
+        ///////////////////////////////////////////////////////////////
+
         public VoidEvent AtBatResetEvent;
 
         private Animation m_ResultAnim;
         private Text m_ResultText;
+
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // unity function
+        ///////////////////////////////////////////////////////////////
 
         private void Start()
         {
@@ -19,9 +33,18 @@ namespace Result
             m_ResultText.enabled = false;
         }
 
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // result function
+        ///////////////////////////////////////////////////////////////
+
+        // display
         public void DisplayResult(int state)
         {
-            string anim_str = "GroundNFoulNStrikeUI";
+            // play title hit result animation
+            string anim_str = "GroundNFoulNStrikeUI"; // connect animation
+
+            // change color and scale
             switch ((ResultState)state)
             {
                 case ResultState.HR:
@@ -43,9 +66,11 @@ namespace Result
                     m_ResultText.color = Color.black;
                     break;
             }
-            m_ResultText.enabled = true;
-            m_ResultAnim.Play(anim_str);
+            m_ResultText.enabled = true; // set
+            m_ResultAnim.Play(anim_str); // play
         }
+
+        // animation
         public void OnAnimationFinisehd(string str)
         {
             m_ResultText.enabled = false;

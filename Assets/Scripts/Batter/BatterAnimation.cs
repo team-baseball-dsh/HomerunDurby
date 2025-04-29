@@ -1,37 +1,38 @@
 using UnityEngine;
 
+// 타자의 애니메이션을 제어하는 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-04-28
+
 public class BatterAnimation : MonoBehaviour
 {
-    public Animator BatterAnimator;
-    public RectTransform PivotRectT;
-    public Transform BatGripT; //TODO - maybe I can just use real x pos of pivot
+    ////////////////////////////////////////////
+    // Component
+    ////////////////////////////////////////////
 
+    // Animator 
+    public Animator BatterAnimator;
+
+    // animation for end swing
     public VoidEvent SwingFinishedEvent;
 
-    private float m_PrevPivotX; //previous pivot position
-    private float m_Distance;
-
+    // boolean swing 
     private bool isSwing = false;
 
-    public void Awake()
-    {
-        m_Distance = BatGripT.position.x - gameObject.transform.position.x;
-        m_PrevPivotX = Util.CameraTranform.ScreenToWorldPointCamera(Camera.main, PivotRectT).x;
-    }
 
-    public void Update()
-    {
-        float realPivotX = Util.CameraTranform.ScreenToWorldPointCamera(Camera.main, PivotRectT).x;
-        if (realPivotX != m_PrevPivotX)
-        {
-            transform.position += new Vector3(realPivotX - m_PrevPivotX, 0, 0);
-            m_PrevPivotX = realPivotX;
-        }
-    }
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Animation Function
+    ///////////////////////////////////////////////////////////////
+
+    // set up swing 
     public void EnableSwing()
     {
         isSwing = false;
     }
+
+    // connect swing animation
     public void Swing()
     {
         if (!isSwing)
@@ -41,6 +42,7 @@ public class BatterAnimation : MonoBehaviour
         }
     }
 
+    // end swing animation
     public void SwingFinished()
     {
         SwingFinishedEvent.Raise();

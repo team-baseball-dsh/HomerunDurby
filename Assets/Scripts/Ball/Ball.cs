@@ -3,9 +3,19 @@ using System.Linq;
 using UnityEngine;
 
 
+// 공의 움직임을 제어하는 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-04-28
+
 public class Ball : MonoBehaviour
 {
-    public Vector3Event BallTravelEvent; //TODO - vector3 might be better since we have to send the info the batter?
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Components
+    ///////////////////////////////////////////////////////////////
+    public Vector3Event BallTravelEvent;
     public IntEvent BallFinishEvent;
     public TransformEvent BallHitEvent;
     public FloatEvent DistanceTrackerEvent;
@@ -20,25 +30,30 @@ public class Ball : MonoBehaviour
 
     private float m_Time  = 0f;
     private int   m_Index = 0;
-    private float m_Speed = 0.0f; //TODO - change name to more appropriate (it's interval of ball travel)
+    private float m_Speed = 0.0f; 
     private bool  m_Start = false;
     private bool  m_IsHit = false;
 
     private const int NUM_CTRL_PTS = 4;
-    private const int EXTRA_PTS = 4; //extra points for bezier curve to cross through the ui canvas
+    private const int EXTRA_PTS = 4; 
 
-    // ball velocity
+
     private float m_BallSpeed = 0f;
 
-    //multiplier for curve and drop offset for breaking balls
+  
     private const float VERT_MULTIPLIER = 0.0015f;
     private const float HORI_MULTIPLIER = 0.0015f;
 
     private Result.ResultState m_ResultState = Result.ResultState.Ground;
 
-    //DEBUG
+
     LineRenderer line;
 
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Unity Function
+    ///////////////////////////////////////////////////////////////
     public void Awake()
     {
         m_Start = false;
@@ -50,6 +65,7 @@ public class Ball : MonoBehaviour
     {
         if (!m_Start) return;
 
+        // value of hit statement
         if (m_IsHit)
         {
             if (m_RB.velocity.magnitude < 0.55f)
@@ -68,77 +84,62 @@ public class Ball : MonoBehaviour
         {
             transform.position = m_BallPath.PathPoints[m_Index++];
             BallTravelEvent.Raise(transform.position);
-            m_Time = 0.0f; //reset the timer
+            m_Time = 0.0f; 
         }
         else if(m_Index >= m_BallPath.PathPoints.Count)
         {
-            //Raise the Finish event to the channel
+
             m_ResultState = Result.ResultState.StrikeOut;
             Destroy(gameObject);
         }
     }
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Physical and Position of Ball
+    ///////////////////////////////////////////////////////////////
     public void StartMove()
     {
         m_Start = true;
     }
 
+
+    // init ball path
     public Vector3 InstantiateBallPath(Pitcher.PitchTypeSO selectedType, Vector3 releasePt, Vector3 targetPt)
     {
+        // create bezier curve path
         m_BallPath = CreatePath(selectedType, releasePt, targetPt);
      
+       // making path points (feat.breaking ball)
         PointCounts = m_BallPath.PathPoints.Count;
 
+        // set up ball max speed
         m_BallSpeed = selectedType.MaxSpeed;
 
-        //Speed
-        //total distance / number of bezier path pts / speed of ball in m/s
-        //TODO - Const is placeholder. Find best fit constant
+        // making ball speed
         m_Speed = selectedType.MaxSpeed * ((targetPt - releasePt).magnitude / m_BallPath.PathPoints.Count) * SPEED_CONSTANT;
 
-/*        //DEBUG: Visualization of line
-        line = gameObject.AddComponent<LineRenderer>();
-        line.positionCount = m_BallPath.PathPoints.Count;
-        line.SetPositions(m_BallPath.PathPoints.ToArray());
-        line.startWidth = 0.1f;
-        line.endWidth = 0.1f;*/
-
-        //return position ball will arrived
+        // return last ball path
         return m_BallPath.PathPoints.Last();
     }
 
-    public void OnHit(Vector3 vel)
-    {
-        m_IsHit = true;
-        if (m_RB == null )
-        {
-            Debug.Log("m_RB is undefined for some reason");
-        }
-        else
-        {
-
-            m_HitPos = transform.position;
-
-            m_RB.useGravity = true;
-            m_RB.velocity = vel;
-            BallHitEvent.Raise(transform);
-        }
-    }
-
+    // init bezier path
     public static Bezier CreatePath(Pitcher.PitchTypeSO type, Vector3 releasePt, Vector3 targetPt)
     {
-        //for calculating the drop and curve of the ball
+
         Vector2 delta = new Vector2(-type.CurveOffset * HORI_MULTIPLIER, -type.DropOffset * VERT_MULTIPLIER);
 
-        /*
-         * Calculate the control points based on two points and delta (ie. curve changes in ball path)
-         */
+       // vector between start pt to end pt
         Vector3 dir = targetPt - releasePt;
 
+        // reset control points
         List<Vector3> ctrlPts = new List<Vector3> { releasePt };
 
-        //interval between the control pts
+        // cal dis ctrl points
+        // 전체 거리를 3등분하여 4개의 컨트롤 포인트로 배치
         float interval = dir.magnitude / (NUM_CTRL_PTS - 1);
 
+        // create ctrl points roof
         for (int i = 1; i < NUM_CTRL_PTS; ++i)
         {
             Vector3 previousPts = ctrlPts[i - 1];
@@ -154,15 +155,37 @@ public class Ball : MonoBehaviour
             ctrlPts.Add(point);
         }
 
-        //Create bezier path
         return new Bezier(ctrlPts);
     }
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Collision And Hitting Function
+    ///////////////////////////////////////////////////////////////
+    public void OnHit(Vector3 vel)
+    {
+        m_IsHit = true;
+        if (m_RB == null)
+        {
+            Debug.Log("m_RB is undefined for some reason");
+        }
+        else
+        {
+
+            m_HitPos = transform.position;
+
+            m_RB.useGravity = true;
+            m_RB.velocity = vel;
+            BallHitEvent.Raise(transform);
+        }
+    }
+
 
     public void OnTriggerEnter(Collider col)
     {
         if (col.CompareTag("OutOfBound"))
         {
-            //Foul
+
             m_ResultState = Result.ResultState.Foul;
         }
         else if (col.CompareTag("HomeRunBound"))
@@ -182,7 +205,7 @@ public class Ball : MonoBehaviour
         BallFinishEvent.Raise((int)m_ResultState);
     }
 
-    // getter for velocity info
+
     public float GetBallSpeed()
     {
         return m_BallSpeed;

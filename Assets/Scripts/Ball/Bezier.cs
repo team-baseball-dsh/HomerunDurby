@@ -1,32 +1,39 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-//Credit to Wasiim
-/**
- * Bezier Curve with 4 control points
- *	maybe it will fun to have more control points to have variety of curve ball
- */
+// 베지어 곡선에 관련된 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-04-28
+
 public class Bezier
 {
-	public List<Vector3> PathPoints;
+    ////////////////////////////////////////////
+    // Component
+    public List<Vector3> PathPoints;
 	private int m_Segments;
 	private const int m_TotalPoints = 100;
 
-	//Constructor
-	public Bezier(List<Vector3> controlPoints)
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Bezier function
+    ///////////////////////////////////////////////////////////////
+
+	// init Bezier
+    public Bezier(List<Vector3> controlPoints)
 	{
-		//define the list of vector3
+
 		PathPoints = new List<Vector3>();
 		CreateCurve(controlPoints);
 	}
 
-	//Calculate Points of Curbe based on Given Control Points
+	// Create Curve path
 	private void CreateCurve(List<Vector3> controlPoints)
 	{
-		//divide the points into 4 pts for each m_Segments
+
 		m_Segments = controlPoints.Count / 3;
 
-		//iterate through each m_Segments
+
 		for (int s = 0; s < controlPoints.Count - 3; s += 3)
 		{
 			Vector3 p0 = controlPoints[s];
@@ -47,10 +54,7 @@ public class Bezier
 		}
 	}
 
-	/*
-	 * Find the points on the curve at time t with given control points
-	 * 
-	 */ 
+	// calculation Bezier Curve
 	private Vector3 BezierPathCalculation(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
 	{
 		float tt = t * t;   // t^2
@@ -59,7 +63,6 @@ public class Bezier
 		float uu = u * u;   // (1-t)^2
 		float uuu = u * uu; // (1-t)^3
 
-		//From https://en.wikipedia.org/wiki/Bézier_curve#Cubic_Bézier_curves
 		//B =[(1-t)^3 * p0] + [3*(1-t)^2 * t * p1] + [3*(1-t) * t^2 * p2] + [(1-t)^3 * p3]
 		Vector3 B = uuu * p0;
 		B += 3.0f * uu * t * p1;    //3*(1-t)^2 * t * p1

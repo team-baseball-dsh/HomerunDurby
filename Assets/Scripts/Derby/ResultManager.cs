@@ -1,29 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 결과 매니저 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-04-29
+
 namespace Result
 {
+    // enum about result
     public enum ResultState { StrikeOut, Ground, Foul, HR };
     
     public class ResultManager : MonoBehaviour
     {
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // Components
+        ///////////////////////////////////////////////////////////////
+        
+        // text 
         public Text ScoreText;
         public Text TempDistanceText;
         public Text HRCountText;
 
+        // count
         private uint m_HRCount = 0;
         private int m_Score = 0;
         private int m_Distance = 0;
+
+        // state
         private ResultState m_CurrentResult = ResultState.Ground;
 
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // unity function
+        ///////////////////////////////////////////////////////////////
+        
         public void Start()
         {
             ScoreText.text = "" + m_Score;
             HRCountText.text = "" + m_HRCount;
         }
 
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // count hit state function
+        ///////////////////////////////////////////////////////////////
         public void UpdateHR(int result)
         {
             m_CurrentResult = (ResultState)result;
@@ -42,10 +66,10 @@ namespace Result
             ScoreText.text = "" + m_Score;
         }
 
-        public void UpdateMaxDistance()
-        {
-            m_CurrentResult = ResultState.Ground;
-        }
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // distance function
+        ///////////////////////////////////////////////////////////////
 
         public void UpdateDistance(float distance)
         {
@@ -53,6 +77,10 @@ namespace Result
             TempDistanceText.text = m_Distance + "m";
         }
 
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // reset function
+        ///////////////////////////////////////////////////////////////
         public void Reset()
         {
             m_HRCount = 0;
