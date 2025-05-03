@@ -2,21 +2,46 @@
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
+// 타자의 입력에 관련된 스크립트
+// 스크립터블 오브젝트 및 input action으로 효율적 운영
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-05-03
+
+
 [CreateAssetMenu(fileName = "New Battter Input", menuName = "InputReader/Batter")]
-public class BatterInputReader : ScriptableObject, GameInput.IBatterNRunnerActions
+public class BatterInputReader : ScriptableObject, GameInput.IBatterActions
 {
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Action Components
+    ///////////////////////////////////////////////////////////////
     public event UnityAction<Vector2> MoveActions;
     public event UnityAction SwingActions;
-    public event UnityAction<bool> BuntActions;
 
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // game input 
+    ///////////////////////////////////////////////////////////////
     private GameInput m_GameInput;
 
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Camera Components
+    ///////////////////////////////////////////////////////////////
     private Camera m_MainCamera;
     private RectTransform m_CanvasRectTransform;
 
-    // ё¶їмЅє А§ДЎ ГЯАы єЇјц
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // mouse position components
+    ///////////////////////////////////////////////////////////////
     private Vector2 m_PreviousMousePosition;
 
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Unity Function
+    ///////////////////////////////////////////////////////////////
     public void Initialize(Camera camera, RectTransform canvasRect)
     {
         m_MainCamera = camera;
@@ -29,23 +54,20 @@ public class BatterInputReader : ScriptableObject, GameInput.IBatterNRunnerActio
         if (m_GameInput == null)
         {
             m_GameInput = new GameInput();
-            m_GameInput.BatterNRunner.SetCallbacks(this);
+            m_GameInput.Batter.SetCallbacks(this);
         }
-        m_GameInput.BatterNRunner.Enable();
+        m_GameInput.Batter.Enable();
     }
 
     public void OnDisable()
     {
-        m_GameInput.BatterNRunner.Disable();
+        m_GameInput.Batter.Disable();
     }
 
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        if (MoveActions != null)
-        {
-            MoveActions.Invoke(context.ReadValue<Vector2>());
-        }
-    }
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // cursor function
+    ///////////////////////////////////////////////////////////////
 
     public void OnMousePosition(InputAction.CallbackContext context)
     {
@@ -55,7 +77,7 @@ public class BatterInputReader : ScriptableObject, GameInput.IBatterNRunnerActio
 
         if (m_CanvasRectTransform != null)
         {
-            // ё¶їмЅє А§ДЎё¦ UI БВЗҐ°и·О єЇИЇ
+
             Vector2 localPoint;
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 m_CanvasRectTransform,
@@ -63,13 +85,17 @@ public class BatterInputReader : ScriptableObject, GameInput.IBatterNRunnerActio
                 m_MainCamera,
                 out localPoint))
             {
-                // БчБўАыАО А§ДЎё¦ АьґЮ (delta°Ў ѕЖґС)
+
                 MoveActions.Invoke(localPoint);
             }
         }
         m_PreviousMousePosition = mousePosition;
     }
 
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Hitting function
+    ///////////////////////////////////////////////////////////////
     public void OnMouseClick(InputAction.CallbackContext context)
     {
         if (context.performed && SwingActions != null)
@@ -78,26 +104,4 @@ public class BatterInputReader : ScriptableObject, GameInput.IBatterNRunnerActio
         }
     }
 
-    public void OnSwing(InputAction.CallbackContext context)
-    {
-        if (SwingActions != null && context.performed)
-        {
-            SwingActions.Invoke();
-        }
-    }
-
-    public void OnBunt(InputAction.CallbackContext context)
-    {
-        if (BuntActions != null)  // MoveActionsїЎј­ BuntActions·О јцБ¤
-        {
-            if (context.performed)
-            {
-                BuntActions.Invoke(true);
-            }
-            else if (context.canceled)
-            {
-                BuntActions.Invoke(false);
-            }
-        }
-    }
 }

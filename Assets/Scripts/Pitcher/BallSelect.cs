@@ -9,7 +9,6 @@ namespace Pitcher
     {
         private bool m_IsAI = true;
 
-        public PitcherInputReader InputReader;
         public PitcherAI AIReader;
 
         public PitcherDataSO PitcherData;
@@ -29,17 +28,10 @@ namespace Pitcher
                 AIReader.PitchSelectActions += Select;
                 AIReader.PitchConfirmActions += Confirm;
             }
-            else
-            {
-                InputReader.SelectActions += Select;
-                InputReader.ConfirmActions += Confirm;
-            } 
         }
 
         public void OnDisable()
         {
-            InputReader.SelectActions  -= Select;
-            InputReader.ConfirmActions -= Confirm;
             AIReader.PitchSelectActions -= Select;
             AIReader.PitchConfirmActions -= Confirm;
         }

@@ -235,36 +235,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""BatterNRunner"",
+            ""name"": ""Batter"",
             ""id"": ""dcd4be4a-900d-4717-b2ab-f457d9cadf53"",
             ""actions"": [
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""c6f31637-6153-4977-bffd-1d27695b2763"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Swing"",
-                    ""type"": ""Button"",
-                    ""id"": ""2756860e-e38c-4759-bf8d-5586b2ac7689"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Bunt"",
-                    ""type"": ""Button"",
-                    ""id"": ""ce74cadf-7395-41f5-bb13-a230a20e42ec"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
                 {
                     ""name"": ""MousePosition"",
                     ""type"": ""Value"",
@@ -285,138 +258,6 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""Keyboard"",
-                    ""id"": ""c8d896c3-4a39-4d35-b713-2331cbff82c5"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""c652f3ba-2318-4801-b735-f7952ed5ae58"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""b9c1bf03-3ad0-4421-b8fa-985e5dd569aa"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""00a96f84-83ea-42ad-802a-1f868e8c74aa"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""8e5e5ad9-d022-49ea-b2cc-1f9cb7133f1d"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Keyboard"",
-                    ""id"": ""634fd400-e33c-4f7b-87c6-c7b7d77355cd"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""918919f0-8400-425a-8f61-b8b4ecc3957f"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""53ae3480-b919-43f1-ac4b-a6a1b848c4ed"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""a62431a2-d89f-4f91-9358-a006f102835a"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""5d101982-ee96-41eb-9146-e323e719f0a1"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7a85beb2-6092-4b23-8ec6-ccf4cd8d2a2e"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Swing"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3d2319e9-5ce5-4a6c-ab9b-ac3a61c11feb"",
-                    ""path"": ""<Keyboard>/b"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Bunt"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""f64f839b-1d08-4272-b495-5be439429f88"",
@@ -477,13 +318,10 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         m_Pitcher_Select = m_Pitcher.FindAction("Select", throwIfNotFound: true);
         m_Pitcher_Confirm = m_Pitcher.FindAction("Confirm", throwIfNotFound: true);
         m_Pitcher_Move = m_Pitcher.FindAction("Move", throwIfNotFound: true);
-        // BatterNRunner
-        m_BatterNRunner = asset.FindActionMap("BatterNRunner", throwIfNotFound: true);
-        m_BatterNRunner_Move = m_BatterNRunner.FindAction("Move", throwIfNotFound: true);
-        m_BatterNRunner_Swing = m_BatterNRunner.FindAction("Swing", throwIfNotFound: true);
-        m_BatterNRunner_Bunt = m_BatterNRunner.FindAction("Bunt", throwIfNotFound: true);
-        m_BatterNRunner_MousePosition = m_BatterNRunner.FindAction("MousePosition", throwIfNotFound: true);
-        m_BatterNRunner_MouseClick = m_BatterNRunner.FindAction("MouseClick", throwIfNotFound: true);
+        // Batter
+        m_Batter = asset.FindActionMap("Batter", throwIfNotFound: true);
+        m_Batter_MousePosition = m_Batter.FindAction("MousePosition", throwIfNotFound: true);
+        m_Batter_MouseClick = m_Batter.FindAction("MouseClick", throwIfNotFound: true);
         // Defense
         m_Defense = asset.FindActionMap("Defense", throwIfNotFound: true);
         m_Defense_Newaction = m_Defense.FindAction("New action", throwIfNotFound: true);
@@ -592,60 +430,36 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
     }
     public PitcherActions @Pitcher => new PitcherActions(this);
 
-    // BatterNRunner
-    private readonly InputActionMap m_BatterNRunner;
-    private IBatterNRunnerActions m_BatterNRunnerActionsCallbackInterface;
-    private readonly InputAction m_BatterNRunner_Move;
-    private readonly InputAction m_BatterNRunner_Swing;
-    private readonly InputAction m_BatterNRunner_Bunt;
-    private readonly InputAction m_BatterNRunner_MousePosition;
-    private readonly InputAction m_BatterNRunner_MouseClick;
-    public struct BatterNRunnerActions
+    // Batter
+    private readonly InputActionMap m_Batter;
+    private IBatterActions m_BatterActionsCallbackInterface;
+    private readonly InputAction m_Batter_MousePosition;
+    private readonly InputAction m_Batter_MouseClick;
+    public struct BatterActions
     {
         private @GameInput m_Wrapper;
-        public BatterNRunnerActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_BatterNRunner_Move;
-        public InputAction @Swing => m_Wrapper.m_BatterNRunner_Swing;
-        public InputAction @Bunt => m_Wrapper.m_BatterNRunner_Bunt;
-        public InputAction @MousePosition => m_Wrapper.m_BatterNRunner_MousePosition;
-        public InputAction @MouseClick => m_Wrapper.m_BatterNRunner_MouseClick;
-        public InputActionMap Get() { return m_Wrapper.m_BatterNRunner; }
+        public BatterActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MousePosition => m_Wrapper.m_Batter_MousePosition;
+        public InputAction @MouseClick => m_Wrapper.m_Batter_MouseClick;
+        public InputActionMap Get() { return m_Wrapper.m_Batter; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(BatterNRunnerActions set) { return set.Get(); }
-        public void SetCallbacks(IBatterNRunnerActions instance)
+        public static implicit operator InputActionMap(BatterActions set) { return set.Get(); }
+        public void SetCallbacks(IBatterActions instance)
         {
-            if (m_Wrapper.m_BatterNRunnerActionsCallbackInterface != null)
+            if (m_Wrapper.m_BatterActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMove;
-                @Swing.started -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnSwing;
-                @Swing.performed -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnSwing;
-                @Swing.canceled -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnSwing;
-                @Bunt.started -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnBunt;
-                @Bunt.performed -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnBunt;
-                @Bunt.canceled -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnBunt;
-                @MousePosition.started -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMousePosition;
-                @MousePosition.performed -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMousePosition;
-                @MousePosition.canceled -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMousePosition;
-                @MouseClick.started -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMouseClick;
-                @MouseClick.performed -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMouseClick;
-                @MouseClick.canceled -= m_Wrapper.m_BatterNRunnerActionsCallbackInterface.OnMouseClick;
+                @MousePosition.started -= m_Wrapper.m_BatterActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_BatterActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_BatterActionsCallbackInterface.OnMousePosition;
+                @MouseClick.started -= m_Wrapper.m_BatterActionsCallbackInterface.OnMouseClick;
+                @MouseClick.performed -= m_Wrapper.m_BatterActionsCallbackInterface.OnMouseClick;
+                @MouseClick.canceled -= m_Wrapper.m_BatterActionsCallbackInterface.OnMouseClick;
             }
-            m_Wrapper.m_BatterNRunnerActionsCallbackInterface = instance;
+            m_Wrapper.m_BatterActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
-                @Swing.started += instance.OnSwing;
-                @Swing.performed += instance.OnSwing;
-                @Swing.canceled += instance.OnSwing;
-                @Bunt.started += instance.OnBunt;
-                @Bunt.performed += instance.OnBunt;
-                @Bunt.canceled += instance.OnBunt;
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
@@ -655,7 +469,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
             }
         }
     }
-    public BatterNRunnerActions @BatterNRunner => new BatterNRunnerActions(this);
+    public BatterActions @Batter => new BatterActions(this);
 
     // Defense
     private readonly InputActionMap m_Defense;
@@ -695,11 +509,8 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         void OnConfirm(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
     }
-    public interface IBatterNRunnerActions
+    public interface IBatterActions
     {
-        void OnMove(InputAction.CallbackContext context);
-        void OnSwing(InputAction.CallbackContext context);
-        void OnBunt(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnMouseClick(InputAction.CallbackContext context);
     }

@@ -10,7 +10,6 @@ namespace Pitcher
 
         public FloatEvent BallSpeedEvent;
 
-        public PitcherInputReader InputReader;
         public PitcherAI AIReader;
 
         public GameObject OffsetCursorObject;
@@ -44,7 +43,6 @@ namespace Pitcher
 
         private void OnEnable()
         {
-            //InputReader.MoveActions += MoveCursor;
             AIReader.PitchCursorActions += MoveCursor;
             m_Cursor.localPosition = m_CenterPosition;
 
@@ -61,10 +59,6 @@ namespace Pitcher
             m_CursorImage.enabled = false;
         }
 
-        void OnDisable()
-        {
-            InputReader.MoveActions -= MoveCursor;
-        }
 
         /*
          * Called by Listener when the select cursor is selected
