@@ -1,10 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
+
+// 투수의 애니메이션을 제어하는 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-05-04
 
 public class PitcherAnimation : MonoBehaviour
 {
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Components
+    ///////////////////////////////////////////////////////////////
     public VoidEvent ThrowEvent;
     private enum State {IDLE,WINDUP,THROW,ROLLUP};
     private State m_State = State.IDLE;
@@ -14,6 +21,10 @@ public class PitcherAnimation : MonoBehaviour
     private float m_Delay = 0.0f;
     private float m_Time  = 0.0f;
 
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Unity Function
+    ///////////////////////////////////////////////////////////////
     public void Awake()
     {
         m_Animator = GetComponent<Animator>();
@@ -38,6 +49,11 @@ public class PitcherAnimation : MonoBehaviour
         }
     }
 
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // pitching and Release point Function
+    ///////////////////////////////////////////////////////////////
     /*
      * Called when the throw animation reached certain keyframe (ie. reached throwing release point)
      *  On reach, this function will be called from ThrowRelease func exist in attached component(at least I think).
@@ -49,11 +65,13 @@ public class PitcherAnimation : MonoBehaviour
         SetState(State.IDLE, 0.0f);
     }
 
+    // start throw
     public void StartThrow()
     {
         SetState(State.WINDUP,1.5f);
     }
 
+    // set the throw statement
     private void SetState(State state, float delay)
     {
         m_State = state;

@@ -1,20 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+// 투수의 구종을 작성하는 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-05-04
 
 namespace Pitcher
 {
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // breaking ball enum set
+    ///////////////////////////////////////////////////////////////
     public enum BallDir { SLOW, CENTER, LEFT, LOWERLEFT, DOWN, LOWERRIGHT, RIGHT };
-    /*
-     * 땯롰
-     * ScriptableObject that generates necessary data for ball type pitcher are able to use
-     */
+
     [CreateAssetMenu(fileName = "New Pitch Type Data", menuName = "ScriptableObjects/ThrowTypeData", order = 1)]
     public class PitchTypeSO : ScriptableObject
     {
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // pitcher set
+        ///////////////////////////////////////////////////////////////
         public string Name = "Ball Type";
 
-        [Range( 60, 180)] public int MaxSpeed = 140;  //km/h
+        [Range( 60, 180)] public int MaxSpeed = 140;  
         [Range(-10,  10)] public int CurveOffset = 0;
         [Range(  0,  10)] public int DropOffset = 0;
 
@@ -50,6 +58,11 @@ namespace Pitcher
             }
             Dir = name;
         }
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // breaking ball function
+        ///////////////////////////////////////////////////////////////
         public static BallDir WhatBallType(Vector2 vec)
         {
             //left curve ball

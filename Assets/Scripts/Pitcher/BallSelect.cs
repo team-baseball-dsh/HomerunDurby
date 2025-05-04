@@ -1,18 +1,29 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
+// 투수가 던질 구종을 선택하는 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-05-04
 
 namespace Pitcher
 {
     public class BallSelect : MonoBehaviour
     {
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // Components - AI and pitcher data info
+        ///////////////////////////////////////////////////////////////
+
         private bool m_IsAI = true;
 
+        // AI mode
         public PitcherAI AIReader;
 
+        // AI pitcher input component
         public PitcherDataSO PitcherData;
 
+        // pitcher data scriptableObject and pitch type
         private Dictionary<BallDir, GameObject>  m_PitchArrowUIDict = new Dictionary<BallDir, GameObject>();
         private Dictionary<BallDir, PitchTypeSO> m_PitchTypeDict    = new Dictionary<BallDir, PitchTypeSO>();
 
@@ -20,6 +31,10 @@ namespace Pitcher
 
         public PitchConfirmEvent _OnConfirmPitchEvent;
 
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // Unity Function
+        ///////////////////////////////////////////////////////////////
         public void OnEnable()
         {
             m_IsAI = true;
@@ -48,6 +63,7 @@ namespace Pitcher
                 arrowUI.SetActive(false); 
    
 
+                
                 foreach (PitchTypeSO pitchType in PitcherData.PitchTypes)
                 {
 
@@ -61,11 +77,18 @@ namespace Pitcher
                         break;
                     }
                 }
+                
             }
+            
+            // basic ball
             m_SelectedBallDir = BallDir.SLOW;
             SelectBall(BallDir.SLOW);
         }
 
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // breaking  ball type function
+        ///////////////////////////////////////////////////////////////
         public void SelectBall(BallDir dir)
         {
             if (m_PitchArrowUIDict.ContainsKey(dir))
@@ -77,6 +100,11 @@ namespace Pitcher
                 m_SelectedBallDir = BallDir.SLOW;
             }
         }
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // process event AI
+        ///////////////////////////////////////////////////////////////
         private void Select(Vector2 dir)
         {
             SelectBall(PitchTypeSO.WhatBallType(dir));

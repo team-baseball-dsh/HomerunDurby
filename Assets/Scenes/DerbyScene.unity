@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -506,7 +506,6 @@ MonoBehaviour:
   SwingEvent: {fileID: 11400000, guid: 14a72d7422bb8dc4c8dada0f27b12149, type: 2}
   BallExitVelEvent: {fileID: 11400000, guid: 20dc3691580ce134c90cbdab67f49361, type: 2}
   MeatCursor: {fileID: 447288768}
-  BuntArrow: {fileID: 0}
   PivotRectT: {fileID: 1199738837}
   m_CheckCollision: 0
   m_AnimationFinisehd: 1
@@ -2489,7 +2488,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562279715da87f04fb9bae1f101d1132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputReader: {fileID: 11400000, guid: e31afdc9be284e047bb4bd85c6db9163, type: 2}
   AIReader: {fileID: 298681467}
   PitcherData: {fileID: 11400000, guid: 338690e698ca3ba4b85a0978c6407fcb, type: 2}
   _OnConfirmPitchEvent: {fileID: 11400000, guid: f052a9a6e0117564bba99833da2455e0, type: 2}
@@ -5956,8 +5954,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BatterAnimator: {fileID: 1550775349}
-  PivotRectT: {fileID: 1199738837}
-  BatGripT: {fileID: 1548923410}
   SwingFinishedEvent: {fileID: 11400000, guid: 2a33b6887e9155e439d5bc0d4da75fa1, type: 2}
 --- !u!1 &1619675303
 GameObject:
@@ -6835,7 +6831,6 @@ MonoBehaviour:
   Speed: 500
   resultUI: {fileID: 1529741578}
   BallSpeedEvent: {fileID: 11400000, guid: db2e7e71be0826c4aa32a36e197a10e9, type: 2}
-  InputReader: {fileID: 11400000, guid: e31afdc9be284e047bb4bd85c6db9163, type: 2}
   AIReader: {fileID: 298681467}
   OffsetCursorObject: {fileID: 2010872153}
   IsStrikeEvent: {fileID: 11400000, guid: 46011006abf5e0848b7ad08606e1cbcc, type: 2}

@@ -1,10 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+// 투구 결과와 구속을 UI에 표시하는 스크립트
+// 최초 작성자 : 이상도
+// 수정자: 이상도
+// 최종 수정일: 2025-05-04
+
 public class ResultUI : MonoBehaviour
 {
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Components
+    ///////////////////////////////////////////////////////////////
     public VoidEvent ResetEvent; //TODO - will display speed/ball type later so have to move this later
 
     // text component that show velocity
@@ -16,7 +25,10 @@ public class ResultUI : MonoBehaviour
     // current ball velocity
     private float m_CurrentBallSpeed = 0f;
 
-    // Start is called before the first frame update
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Unity Function
+    ///////////////////////////////////////////////////////////////
     public void Start()
     {
         m_DisplayText = GetComponent<Text>();
@@ -29,6 +41,12 @@ public class ResultUI : MonoBehaviour
         }
     }
 
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // velocity function
+    ///////////////////////////////////////////////////////////////
+    
+    // set the velocity
     public void SetBallSpeed(float speed)
     {
         m_CurrentBallSpeed = speed;
@@ -46,37 +64,25 @@ public class ResultUI : MonoBehaviour
         Debug.Log("구속 UI 설정 완료: " + m_SpeedText.text);
     }
 
-    public void ShowResult(bool isStrike)
+    // show the velocity function
+    private void DisplayBallSpeed()
     {
-        Debug.Log("ShowResult 호출됨: " + isStrike + ", 저장된 구속: " + m_CurrentBallSpeed);
-
-        if (isStrike)
+        if (m_SpeedText == null)
         {
-            m_DisplayText.color = Color.red;
-            m_DisplayText.text = "STRIKE";
-        }
-        else
-        {
-            m_DisplayText.color = Color.cyan;
-            m_DisplayText.text = "BALL";
-            
-        }
-        m_DisplayText.enabled = true;
-
-        if (m_SpeedText != null)
-        {
-            m_SpeedText.text = Mathf.RoundToInt(m_CurrentBallSpeed) + " km/h";
-            m_SpeedText.enabled = true;
+            Debug.LogError("SpeedText가 null입니다! ShowResult에서 구속을 표시할 수 없습니다.");
+            return;
         }
 
-        Debug.Log("결과 표시 구속: " + m_CurrentBallSpeed + " km/h");
-
-        DisplayBallSpeed();
-
-        StartCoroutine("Show");
+        m_SpeedText.text = Mathf.RoundToInt(m_CurrentBallSpeed) + " km/h";
+        m_SpeedText.enabled = true;
+        Debug.Log("구속 표시됨: " + m_SpeedText.text);
     }
 
-    //Wait for certain time until hide the text and invoke next event
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // event couroutain function
+    ///////////////////////////////////////////////////////////////
     private IEnumerator Show()
     {
         yield return new WaitForSeconds(m_DisplayTime);
@@ -90,17 +96,6 @@ public class ResultUI : MonoBehaviour
         ResetEvent.Raise();
     }
 
-    private void DisplayBallSpeed()
-    {
-        if (m_SpeedText == null)
-        {
-            Debug.LogError("SpeedText가 null입니다! ShowResult에서 구속을 표시할 수 없습니다.");
-            return;
-        }
 
-        m_SpeedText.text = Mathf.RoundToInt(m_CurrentBallSpeed) + " km/h";
-        m_SpeedText.enabled = true;
-        Debug.Log("구속 표시됨: " + m_SpeedText.text);
-    }
 
 }
