@@ -127,7 +127,7 @@ namespace Pitcher
         // Throw function
         ///////////////////////////////////////////////////////////////
         public void Throw()
-        { 
+        {
             //Conver the screen position to world position
             Vector3 realWorldCursorPos = Util.CameraTranform.ScreenToWorldPointCamera(Camera.main, m_Cursor);
 
@@ -147,13 +147,12 @@ namespace Pitcher
                 Debug.LogError("resultUI 참조가 없습니다!");
             }
 
-            if(BallSpeedEvent != null)
+            if (BallSpeedEvent != null)
             {
                 BallSpeedEvent.Raise(m_Ball.GetBallSpeed());
             }
 
             m_OffsetInterval = (m_OffsetCursorRectT.position - m_Cursor.position) / m_Ball.PointCounts;
-            
 
             //Remove the offset cursor and let the main cursor display the changes 
             OffsetCursorObject.SetActive(false);
