@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 // 홈런 더비 제어와 관련된 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-04-29
+// 최종 수정일: 2025-05-07
 
 public class DerbyManager : MonoBehaviour
 {
@@ -21,6 +21,32 @@ public class DerbyManager : MonoBehaviour
     // life count
     private int m_Count = 10;
 
+    // Debug Mode
+    [Header("디버그 설정")]
+    [Tooltip("활성화하면 모든 타구가 홈런이 된다.")]
+    public bool DebugHR = false;
+
+    [Tooltip("디버그 모드에서 홈런의 비거리 (미터)")]
+    public int DebugHomeRunDistance = 120;
+
+    [Tooltip("디버그 모드에서 사용할 공의 속도")]
+    public float DebugBallSpeed = 40f;
+
+    // set the debug bool button
+    public static bool IsDebugHomeRunMode = false;
+    public static int DebugDistance = 120;
+    public static float DebugBallSpeedValue = 25f;
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Unity Function
+    ///////////////////////////////////////////////////////////////
+    public void Awake()
+    {
+        IsDebugHomeRunMode = DebugHR;
+        DebugDistance = DebugHomeRunDistance;
+        DebugBallSpeedValue = DebugBallSpeed;
+    }
 
     ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
@@ -43,5 +69,16 @@ public class DerbyManager : MonoBehaviour
     {
         InputReader.StartActions -= Restart;
         SceneManager.LoadScene("DerbyScene",LoadSceneMode.Single); // change scene
+    }
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Debug toggle fundtion
+    ///////////////////////////////////////////////////////////////
+    public void ToggleDebugHomeRun()
+    {
+        DebugHR = !DebugHR;
+        IsDebugHomeRunMode = DebugHR;
+        Debug.Log("홈런 디버그 모드: " + (DebugHR ? "활성화" : "비활성화"));
     }
 }

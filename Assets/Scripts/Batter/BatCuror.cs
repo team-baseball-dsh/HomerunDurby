@@ -133,7 +133,7 @@ namespace Batter
                 Vector3 ballPos = other.transform.position;
                 Vector3 delta = ballPos - transform.position;
 
-                BallExitVelEvent.Raise(delta * 150);
+                BallExitVelEvent.Raise(delta * 170);
             }
         }
 

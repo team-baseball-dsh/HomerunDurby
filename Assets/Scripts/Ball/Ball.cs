@@ -6,7 +6,7 @@ using UnityEngine;
 // 공의 움직임을 제어하는 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-04-28
+// 최종 수정일: 2025-05-07
 
 public class Ball : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour
     public TransformEvent BallHitEvent;
     public FloatEvent DistanceTrackerEvent;
 
-    public float SPEED_CONSTANT = 100000f;
+    public float SPEED_CONSTANT = 1000000f;
     public int PointCounts = 100;
 
     private Rigidbody m_RB; 
@@ -47,6 +47,11 @@ public class Ball : MonoBehaviour
     private Result.ResultState m_ResultState = Result.ResultState.Ground;
 
 
+    // Debug
+    private Vector3 m_DebugDirection = Vector3.zero;
+    private bool m_IsDebugHomeRun = false;
+    private float m_HitTime = 0f;
+
     LineRenderer line;
 
 
@@ -68,13 +73,28 @@ public class Ball : MonoBehaviour
         // value of hit statement
         if (m_IsHit)
         {
-            if (m_RB.velocity.magnitude < 0.55f)
+            // cal distance feating actually ball position (debug mode)
+            DistanceTrackerEvent.Raise((transform.position - m_HitPos).magnitude);
+
+
+            float flightTime = Time.time - m_HitTime;
+
+            if (DerbyManager.IsDebugHomeRunMode)
+            {
+                
+                if (flightTime > 2.0f && m_RB.velocity.magnitude < 1.0f)
+                {
+                    m_ResultState = Result.ResultState.HR;
+                    Destroy(gameObject);
+                    return;
+                }
+            }
+            else if (m_RB.velocity.magnitude < 0.55f)
             {
                 m_ResultState = Result.ResultState.Ground;
                 Destroy(gameObject);
             }
 
-            DistanceTrackerEvent.Raise((transform.position - m_HitPos).magnitude);
             return;
         }
 
@@ -94,9 +114,47 @@ public class Ball : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter(Collider col)
+    {
+
+        // 디버그 모드인 경우 홈런 바운드에만 반응하고 다른 충돌은 무시
+        if (DerbyManager.IsDebugHomeRunMode)
+        {
+            if (col.CompareTag("HomeRunBound"))
+            {
+                // 홈런 바운드에 닿으면 홈런으로 설정하고 공 파괴
+                m_ResultState = Result.ResultState.HR;
+                Destroy(gameObject);
+            }
+            // 다른 모든 충돌은 무시 (계속 날아감)
+            return;
+        }
+
+        // 기존 로직 (디버그 모드가 아닐 경우)
+        if (col.CompareTag("OutOfBound"))
+        {
+            m_ResultState = Result.ResultState.Foul;
+        }
+        else if (col.CompareTag("HomeRunBound"))
+        {
+            m_ResultState = Result.ResultState.HR;
+        }
+        else
+        {
+            m_ResultState = Result.ResultState.Ground;
+            return;
+        }
+        Destroy(gameObject);
+    }
+
+    public void OnDestroy()
+    {
+        BallFinishEvent.Raise((int)m_ResultState);
+    }
+
     ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
-    // Physical and Position of Ball
+    // Physical and Position Function
     ///////////////////////////////////////////////////////////////
     public void StartMove()
     {
@@ -109,8 +167,8 @@ public class Ball : MonoBehaviour
     {
         // create bezier curve path
         m_BallPath = CreatePath(selectedType, releasePt, targetPt);
-     
-       // making path points (feat.breaking ball)
+
+        // making path points (feat.breaking ball)
         PointCounts = m_BallPath.PathPoints.Count;
 
         // set up ball max speed
@@ -129,7 +187,7 @@ public class Ball : MonoBehaviour
 
         Vector2 delta = new Vector2(-type.CurveOffset * HORI_MULTIPLIER, -type.DropOffset * VERT_MULTIPLIER);
 
-       // vector between start pt to end pt
+        // vector between start pt to end pt
         Vector3 dir = targetPt - releasePt;
 
         // reset control points
@@ -165,6 +223,8 @@ public class Ball : MonoBehaviour
     public void OnHit(Vector3 vel)
     {
         m_IsHit = true;
+        m_HitTime = Time.time;
+
         if (m_RB == null)
         {
             Debug.Log("m_RB is undefined for some reason");
@@ -174,37 +234,41 @@ public class Ball : MonoBehaviour
 
             m_HitPos = transform.position;
 
+            // checking the debug mode
+            if (DerbyManager.IsDebugHomeRunMode)
+            {
+                m_IsDebugHomeRun = true;
+
+                float angle = Random.Range(30f, 50f) * Mathf.Deg2Rad;
+                float horizontalAngle = Random.Range(-30f, 30f) * Mathf.Deg2Rad;
+
+                float power = DerbyManager.DebugBallSpeedValue;
+
+                Vector3 direction = new Vector3(
+                    Mathf.Sin(horizontalAngle),
+                    Mathf.Sin(angle),
+                    Mathf.Abs(Mathf.Cos(angle) * Mathf.Cos(horizontalAngle)) * -1
+                ).normalized;
+
+                vel = direction * power;
+
+                m_DebugDirection = direction;
+
+                Debug.Log("디버그 모드: 홈런 발사! 각도: " + (angle * Mathf.Rad2Deg) + "도");
+            }
+
+            else
+            {
+                
+                float distanceMultiplier = 1.75f; 
+                vel *= distanceMultiplier;
+            }
+
             m_RB.useGravity = true;
             m_RB.velocity = vel;
             BallHitEvent.Raise(transform);
         }
     }
-
-
-    public void OnTriggerEnter(Collider col)
-    {
-        if (col.CompareTag("OutOfBound"))
-        {
-
-            m_ResultState = Result.ResultState.Foul;
-        }
-        else if (col.CompareTag("HomeRunBound"))
-        {
-            m_ResultState = Result.ResultState.HR;
-        }
-        else
-        {
-            m_ResultState = Result.ResultState.Ground;
-            return;
-        }
-        Destroy(gameObject);
-    }
-
-    public void OnDestroy()
-    {
-        BallFinishEvent.Raise((int)m_ResultState);
-    }
-
 
     public float GetBallSpeed()
     {
