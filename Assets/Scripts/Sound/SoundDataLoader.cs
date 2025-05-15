@@ -5,7 +5,7 @@ using UnityEngine;
 // 사운드 데이터에 관련된 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-05-13
+// 최종 수정일: 2025-05-15
 
 public class SoundDataLoader : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class SoundDataLoader : MonoBehaviour
     // Components
     ///////////////////////////////////////////////////////////////
 
+    public SoundData strikeData;
     public SoundData soundData;
 
     ///////////////////////////////////////////////////////////////
@@ -23,9 +24,27 @@ public class SoundDataLoader : MonoBehaviour
 
     private void Start()
     {
+
+        /*
         if (SoundManager.Instance != null && soundData != null)
         {
             SoundManager.Instance.LoadSoundData(soundData);
         }
+        */
+
+        if (SoundManager.Instance != null)
+        {
+            if (soundData != null)
+            {
+                SoundManager.Instance.LoadSoundData(soundData);
+            }
+
+            // StrikeData 로드 (아직 로드되지 않는 경우)
+            if (strikeData != null)
+            {
+                SoundManager.Instance.LoadSoundData(strikeData);
+            }
+        }
+
     }
 }

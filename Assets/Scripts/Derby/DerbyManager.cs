@@ -52,16 +52,31 @@ public class DerbyManager : MonoBehaviour
     ///////////////////////////////////////////////////////////////
     // text and game over and restart logic function
     ///////////////////////////////////////////////////////////////
-    public void DecrementCount()
+    public void DecrementCount(bool isStrike = true)
     {
-        --m_Count;
-        RemainCountText.text = "" + m_Count;
-        if (m_Count == 0)
+        if (isStrike)
         {
-            //GameOver
-            //Display Result
-            GameOverEvent.Raise();
-            InputReader.StartActions += Restart;
+            --m_Count;
+            RemainCountText.text = "" + m_Count;
+
+            if (SoundManager.Instance != null)
+            {
+                int randomSound = Random.Range(1, 4);
+                string soundName = "s" + randomSound;
+                SoundManager.Instance.PlaySound(soundName);
+            }
+
+            if (m_Count == 0)
+            {
+                //GameOver
+                //Display Result
+                GameOverEvent.Raise();
+                InputReader.StartActions += Restart;
+            }
+        }
+        else
+        {
+            Debug.Log("Ball!");
         }
     }
 

@@ -181,10 +181,27 @@ namespace Pitcher
 
         ///////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////
+        // show the strike UI fucntion
+        ///////////////////////////////////////////////////////////////
+        private bool IsStrike()
+        {
+            return InsideTheBound();
+        }
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
         // finish ball move function
         ///////////////////////////////////////////////////////////////
         public void OnBallFinish()
         {
+            bool isInStrikeZone = InsideTheBound();
+
+            var derbyManager = FindObjectOfType<DerbyManager>();
+            if(derbyManager != null)
+            {
+                derbyManager.DecrementCount(isInStrikeZone);
+            }
+
             IsStrikeEvent.Raise(InsideTheBound());
         }
     }

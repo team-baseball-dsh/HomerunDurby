@@ -61,9 +61,12 @@ namespace Result
                     m_ResultText.color = Color.red;
                     break;
                 case ResultState.Ground:
-                default:
                     m_ResultText.text = "GROUND BALL";
                     m_ResultText.color = Color.black;
+                    break;
+                default:
+                    m_ResultText.text = "BALL";
+                    m_ResultText.color = Color.blue;
                     break;
             }
             m_ResultText.enabled = true; // set

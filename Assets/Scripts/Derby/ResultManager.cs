@@ -31,6 +31,9 @@ namespace Result
         // state
         private ResultState m_CurrentResult = ResultState.Ground;
 
+        // boolean strike and ball
+        private bool isStrike = false;
+
 
         ///////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////
@@ -64,6 +67,25 @@ namespace Result
             }
 
             ScoreText.text = "" + m_Score;
+        }
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // Determine strike and ball function
+        ///////////////////////////////////////////////////////////////
+
+        public void DetermineStrikeOrBall(bool inStrikeZone)
+        {
+            isStrike = inStrikeZone;
+
+            if (isStrike)
+            {
+                m_CurrentResult = ResultState.StrikeOut;
+            }
+            else
+            {
+                //m_CurrentResult = ResultState.Ball;
+            }
         }
 
         ///////////////////////////////////////////////////////////////

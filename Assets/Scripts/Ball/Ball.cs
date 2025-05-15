@@ -260,7 +260,7 @@ public class Ball : MonoBehaviour
             else
             {
                 
-                float distanceMultiplier = 1.75f; 
+                float distanceMultiplier = 1.5f; 
                 vel *= distanceMultiplier;
             }
 
