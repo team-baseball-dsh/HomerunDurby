@@ -3,7 +3,7 @@ using UnityEngine;
 // 투수의 애니메이션을 제어하는 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-05-04
+// 최종 수정일: 2025-05-19
 
 public class PitcherAnimation : MonoBehaviour
 {
@@ -61,6 +61,12 @@ public class PitcherAnimation : MonoBehaviour
     public void ThrowRelease()
     {
         Debug.Log("Reached release point");
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound("pitching", false, 1.0f);
+        }
+
         ThrowEvent.Raise();
         SetState(State.IDLE, 0.0f);
     }

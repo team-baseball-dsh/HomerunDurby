@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Result;
 
 // 홈런 더비 제어와 관련된 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-05-07
+// 최종 수정일: 2025-05-19
 
 public class DerbyManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class DerbyManager : MonoBehaviour
     public Text RemainCountText;
     public VoidEvent GameOverEvent;
     public MenuInputReader InputReader;
+
+    private static bool s_HasPlayedEntranceMusic = false;
 
     // life count
     private int m_Count = 10;
@@ -48,9 +51,26 @@ public class DerbyManager : MonoBehaviour
         DebugBallSpeedValue = DebugBallSpeed;
     }
 
+    public void Start()
+    {
+        if (!s_HasPlayedEntranceMusic)
+        {
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound("appear", false, 1.0f);
+                s_HasPlayedEntranceMusic = true;
+            }
+        }
+
+        if (RemainCountText != null)
+        {
+            RemainCountText.text = "" + m_Count;
+        }
+    }
+
     ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
-    // text and game over and restart logic function
+    // text sound and game over and restart logic function
     ///////////////////////////////////////////////////////////////
     public void DecrementCount(bool isStrike = true)
     {
@@ -58,13 +78,6 @@ public class DerbyManager : MonoBehaviour
         {
             --m_Count;
             RemainCountText.text = "" + m_Count;
-
-            if (SoundManager.Instance != null)
-            {
-                int randomSound = Random.Range(1, 4);
-                string soundName = "s" + randomSound;
-                SoundManager.Instance.PlaySound(soundName);
-            }
 
             if (m_Count == 0)
             {
@@ -74,9 +87,14 @@ public class DerbyManager : MonoBehaviour
                 InputReader.StartActions += Restart;
             }
         }
-        else
+    }
+    public void PlayStrikeSound()
+    {
+        if (SoundManager.Instance != null)
         {
-            Debug.Log("Ball!");
+            int randomSound = Random.Range(1, 4);
+            string soundName = "s" + randomSound;
+            SoundManager.Instance.PlaySound(soundName);
         }
     }
 

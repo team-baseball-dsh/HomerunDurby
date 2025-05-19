@@ -15,7 +15,8 @@ public class SoundDataLoader : MonoBehaviour
     ///////////////////////////////////////////////////////////////
 
     public SoundData strikeData;
-    public SoundData soundData;
+    public SoundData sfxData;
+    public SoundData bgmData;
 
     ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
@@ -34,9 +35,14 @@ public class SoundDataLoader : MonoBehaviour
 
         if (SoundManager.Instance != null)
         {
-            if (soundData != null)
+            if (sfxData != null)
             {
-                SoundManager.Instance.LoadSoundData(soundData);
+                SoundManager.Instance.LoadSoundData(sfxData);
+            }
+
+            if (bgmData != null)
+            {
+                SoundManager.Instance.LoadSoundData(bgmData);
             }
 
             // StrikeData 로드 (아직 로드되지 않는 경우)

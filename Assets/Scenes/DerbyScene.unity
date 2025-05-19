@@ -999,6 +999,7 @@ MonoBehaviour:
   RemainCountText: {fileID: 2076494490}
   GameOverEvent: {fileID: 11400000, guid: 744a0b28dbff88542a009f512e651e9c, type: 2}
   InputReader: {fileID: 11400000, guid: 179b2aa3a0dc5a74e817dfcc885afdad, type: 2}
+  EntranceMusicName: appear
   DebugHR: 0
   DebugHomeRunDistance: 100
   DebugBallSpeed: 40
@@ -2752,7 +2753,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strikeData: {fileID: 11400000, guid: add143a6d29c9084bb94898ca53ff5f7, type: 2}
-  soundData: {fileID: 0}
+  sfxData: {fileID: 11400000, guid: e1f0048eadc1a5547b7b0e6f5497dd80, type: 2}
+  bgmData: {fileID: 11400000, guid: 47d253192d2ab8a4a9c68f4913607f3a, type: 2}
 --- !u!4 &1094387926
 Transform:
   m_ObjectHideFlags: 0

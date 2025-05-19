@@ -196,10 +196,14 @@ namespace Pitcher
         {
             bool isInStrikeZone = InsideTheBound();
 
+            // find the ball and check the hitting
+            var ball = FindObjectOfType<Ball>();
+            bool isHit = ball != null && ball.IsHit();
+
             var derbyManager = FindObjectOfType<DerbyManager>();
             if(derbyManager != null)
             {
-                derbyManager.DecrementCount(isInStrikeZone);
+                derbyManager.DecrementCount(isInStrikeZone && !isHit);
             }
 
             IsStrikeEvent.Raise(InsideTheBound());
