@@ -29,3 +29,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 955f73d500d618c479381336dee2c10d, type: 3}
   - soundName: pitching
     audioClip: {fileID: 8300000, guid: 605d8aeb79008444e81ad74349ba67ac, type: 3}
+  - soundName: foul
+    audioClip: {fileID: 8300000, guid: f901835377844c64985574deeb48bc4b, type: 3}
+  - soundName: hit_call
+    audioClip: {fileID: 8300000, guid: f59cb8429b721514889d5ec7a597be88, type: 3}

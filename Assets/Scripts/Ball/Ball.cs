@@ -7,7 +7,7 @@ using Result;
 // 공의 움직임을 제어하는 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-05-19
+// 최종 수정일: 2025-05-20
 
 public class Ball : MonoBehaviour
 {
@@ -141,6 +141,11 @@ public class Ball : MonoBehaviour
         if (col.CompareTag("OutOfBound"))
         {
             m_ResultState = Result.ResultState.Foul;
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound("foul", false, 1.0f);
+            }
         }
         else if (col.CompareTag("HomeRunBound"))
         {
@@ -154,6 +159,11 @@ public class Ball : MonoBehaviour
         else
         {
             m_ResultState = Result.ResultState.Ground;
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound("hit_call", false, 1.0f);
+            }
             return;
         }
         Destroy(gameObject);
