@@ -999,7 +999,6 @@ MonoBehaviour:
   RemainCountText: {fileID: 2076494490}
   GameOverEvent: {fileID: 11400000, guid: 744a0b28dbff88542a009f512e651e9c, type: 2}
   InputReader: {fileID: 11400000, guid: 179b2aa3a0dc5a74e817dfcc885afdad, type: 2}
-  EntranceMusicName: appear
   DebugHR: 0
   DebugHomeRunDistance: 100
   DebugBallSpeed: 40
@@ -1076,6 +1075,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 9035850883732af4daf57c888e1fefce, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 9035850883732af4daf57c888e1fefce, type: 3}
     - target: {fileID: 9500000, guid: 9035850883732af4daf57c888e1fefce, type: 3}
       propertyPath: m_Controller
       value: 
