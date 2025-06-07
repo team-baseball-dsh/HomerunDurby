@@ -130,10 +130,14 @@ namespace Batter
         {
             if (other.CompareTag("Ball"))
             {
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlaySound("hit");
+                }
                 Vector3 ballPos = other.transform.position;
                 Vector3 delta = ballPos - transform.position;
 
-                BallExitVelEvent.Raise(delta * 170);
+                BallExitVelEvent.Raise(delta * 150);
             }
         }
 

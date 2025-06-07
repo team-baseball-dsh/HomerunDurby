@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Result;
 
 
 // 공의 움직임을 제어하는 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-05-07
+// 최종 수정일: 2025-05-20
 
 public class Ball : MonoBehaviour
 {
@@ -124,6 +125,12 @@ public class Ball : MonoBehaviour
             {
                 // 홈런 바운드에 닿으면 홈런으로 설정하고 공 파괴
                 m_ResultState = Result.ResultState.HR;
+
+                // 홈런 환호 사운드
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlaySound("homerun_impact_call", false, 1.0f);
+                }
                 Destroy(gameObject);
             }
             // 다른 모든 충돌은 무시 (계속 날아감)
@@ -134,14 +141,29 @@ public class Ball : MonoBehaviour
         if (col.CompareTag("OutOfBound"))
         {
             m_ResultState = Result.ResultState.Foul;
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound("foul", false, 1.0f);
+            }
         }
         else if (col.CompareTag("HomeRunBound"))
         {
             m_ResultState = Result.ResultState.HR;
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound("homerun_impact_call", false, 1.0f);
+            }
         }
         else
         {
             m_ResultState = Result.ResultState.Ground;
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound("hit_call", false, 1.0f);
+            }
             return;
         }
         Destroy(gameObject);
@@ -150,7 +172,36 @@ public class Ball : MonoBehaviour
     public void OnDestroy()
     {
         BallFinishEvent.Raise((int)m_ResultState);
+
+        if (m_ResultState == Result.ResultState.StrikeOut)
+        {
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound("catching", false, 1.0f);
+            }
+
+            var derbyManager = FindObjectOfType<DerbyManager>();
+            if (derbyManager != null)
+            {
+                derbyManager.PlayStrikeSound();
+            }
+        }
     }
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    // Getter Function
+    ///////////////////////////////////////////////////////////////
+    public bool IsHit()
+    {
+        return m_IsHit;
+    }
+
+    public ResultState GetResultState()
+    {
+        return m_ResultState;
+    }
+    
 
     ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
@@ -260,7 +311,7 @@ public class Ball : MonoBehaviour
             else
             {
                 
-                float distanceMultiplier = 1.75f; 
+                float distanceMultiplier = 1.5f; 
                 vel *= distanceMultiplier;
             }
 

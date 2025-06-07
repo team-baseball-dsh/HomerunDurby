@@ -4,7 +4,7 @@ using UnityEngine.UI;
 // 결과 애니메이션에 관련한 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-04-29
+// 최종 수정일: 2025-05-20
 
 namespace Result
 {
@@ -61,9 +61,12 @@ namespace Result
                     m_ResultText.color = Color.red;
                     break;
                 case ResultState.Ground:
-                default:
                     m_ResultText.text = "GROUND BALL";
                     m_ResultText.color = Color.black;
+                    break;
+                default:
+                    m_ResultText.text = "BALL";
+                    m_ResultText.color = Color.blue;
                     break;
             }
             m_ResultText.enabled = true; // set

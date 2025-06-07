@@ -4,8 +4,7 @@ using UnityEngine.UI;
 // 결과 매니저 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-04-29
-
+// 최종 수정일: 2025-05-19
 namespace Result
 {
     // enum about result
@@ -30,6 +29,9 @@ namespace Result
 
         // state
         private ResultState m_CurrentResult = ResultState.Ground;
+
+        // boolean strike and ball
+        private bool isStrike = false;
 
 
         ///////////////////////////////////////////////////////////////
@@ -64,6 +66,34 @@ namespace Result
             }
 
             ScoreText.text = "" + m_Score;
+        }
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // Determine strike and ball function
+        ///////////////////////////////////////////////////////////////
+
+        public void DetermineStrikeOrBall(bool inStrikeZone)
+        {
+            isStrike = inStrikeZone;
+
+            if (isStrike)
+            {
+                m_CurrentResult = ResultState.StrikeOut;
+            }
+            else
+            {
+                //m_CurrentResult = ResultState.Ball;
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
+        // Result function
+        ///////////////////////////////////////////////////////////////
+        public ResultState GetCurrentResult()
+        {
+            return m_CurrentResult;
         }
 
         ///////////////////////////////////////////////////////////////
