@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 1_slow
   m_EditorClassIdentifier: 
   Name: Slow Ball
-  MaxSpeed: 80
-  CurveOffset: 0
+  MaxSpeed: 60
+  CurveOffset: -10
   DropOffset: 0
   Dir: 0
+  SpeedMultiplier: 0.75
+  BreakMultiplier: 5

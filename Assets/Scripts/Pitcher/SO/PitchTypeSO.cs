@@ -3,7 +3,7 @@ using UnityEngine;
 // 투수의 구종을 작성하는 스크립트
 // 최초 작성자 : 이상도
 // 수정자: 이상도
-// 최종 수정일: 2025-05-04
+// 최종 수정일: 2026-03-03
 
 namespace Pitcher
 {
@@ -28,6 +28,10 @@ namespace Pitcher
 
         public Vector2 DirVec { get; }
         public BallDir Dir;
+
+        [Header("Tuning (per pitch type)")]
+        [Range(0.1f, 2f)] public float SpeedMultiplier = 1f;   // 1보다 작으면 느려짐
+        [Range(0.1f, 5f)] public float BreakMultiplier = 1f;   // 1보다 크면 더 많이 휘어짐
 
         public PitchTypeSO(BallDir name)
         {

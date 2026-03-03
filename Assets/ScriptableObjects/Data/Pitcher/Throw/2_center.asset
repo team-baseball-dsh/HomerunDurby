@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 2_center
   m_EditorClassIdentifier: 
   Name: Fast Ball
-  MaxSpeed: 160
+  MaxSpeed: 130
   CurveOffset: 0
   DropOffset: 0
   Dir: 1
+  SpeedMultiplier: 0
+  BreakMultiplier: 0

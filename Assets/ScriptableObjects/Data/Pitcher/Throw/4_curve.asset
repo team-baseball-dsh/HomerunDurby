@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 4_curve
   m_EditorClassIdentifier: 
   Name: Curve Ball
-  MaxSpeed: 135
-  CurveOffset: -8
-  DropOffset: 8
+  MaxSpeed: 60
+  CurveOffset: 10
+  DropOffset: 0
   Dir: 3
+  SpeedMultiplier: 0.75
+  BreakMultiplier: 5

@@ -1,13 +1,13 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Result;
 
 
-// °øÀÇ ¿òÁ÷ÀÓÀ» Á¦¾îÇÏ´Â ½ºÅ©¸³Æ®
-// ÃÖÃÊ ÀÛ¼ºÀÚ : ÀÌ»óµµ
-// ¼öÁ¤ÀÚ: ÀÌ»óµµ
-// ÃÖÁ¾ ¼öÁ¤ÀÏ: 2025-05-20
+// ê³µì˜ ì›€ì§ì„ì„ ì œì–´í•˜ëŠ” ìŠ¤í¬ë¦½íŠ¸
+// ìµœì´ˆ ì‘ì„±ì : ì´ìƒë„
+// ìˆ˜ì •ì: ì´ìƒë„
+// ìµœì¢… ìˆ˜ì •ì¼: 2026-03-03
 
 public class Ball : MonoBehaviour
 {
@@ -21,7 +21,7 @@ public class Ball : MonoBehaviour
     public TransformEvent BallHitEvent;
     public FloatEvent DistanceTrackerEvent;
 
-    public float SPEED_CONSTANT = 1000000f;
+    //public float SPEED_CONSTANT = 1000000f;
     public int PointCounts = 100;
 
     private Rigidbody m_RB; 
@@ -41,9 +41,9 @@ public class Ball : MonoBehaviour
 
     private float m_BallSpeed = 0f;
 
-  
-    private const float VERT_MULTIPLIER = 0.0015f;
-    private const float HORI_MULTIPLIER = 0.0015f;
+
+    private const float VERT_MULTIPLIER = 0.02f;
+    private const float HORI_MULTIPLIER = 0.02f;
 
     private Result.ResultState m_ResultState = Result.ResultState.Ground;
 
@@ -118,26 +118,26 @@ public class Ball : MonoBehaviour
     public void OnTriggerEnter(Collider col)
     {
 
-        // µğ¹ö±× ¸ğµåÀÎ °æ¿ì È¨·± ¹Ù¿îµå¿¡¸¸ ¹İÀÀÇÏ°í ´Ù¸¥ Ãæµ¹Àº ¹«½Ã
+        // ë””ë²„ê·¸ ëª¨ë“œì¸ ê²½ìš° í™ˆëŸ° ë°”ìš´ë“œì—ë§Œ ë°˜ì‘í•˜ê³  ë‹¤ë¥¸ ì¶©ëŒì€ ë¬´ì‹œ
         if (DerbyManager.IsDebugHomeRunMode)
         {
             if (col.CompareTag("HomeRunBound"))
             {
-                // È¨·± ¹Ù¿îµå¿¡ ´êÀ¸¸é È¨·±À¸·Î ¼³Á¤ÇÏ°í °ø ÆÄ±«
+                // í™ˆëŸ° ë°”ìš´ë“œì— ë‹¿ìœ¼ë©´ í™ˆëŸ°ìœ¼ë¡œ ì„¤ì •í•˜ê³  ê³µ íŒŒê´´
                 m_ResultState = Result.ResultState.HR;
 
-                // È¨·± È¯È£ »ç¿îµå
+                // í™ˆëŸ° í™˜í˜¸ ì‚¬ìš´ë“œ
                 if (SoundManager.Instance != null)
                 {
                     SoundManager.Instance.PlaySound("homerun_impact_call", false, 1.0f);
                 }
                 Destroy(gameObject);
             }
-            // ´Ù¸¥ ¸ğµç Ãæµ¹Àº ¹«½Ã (°è¼Ó ³¯¾Æ°¨)
+            // ë‹¤ë¥¸ ëª¨ë“  ì¶©ëŒì€ ë¬´ì‹œ (ê³„ì† ë‚ ì•„ê°)
             return;
         }
 
-        // ±âÁ¸ ·ÎÁ÷ (µğ¹ö±× ¸ğµå°¡ ¾Æ´Ò °æ¿ì)
+        // ê¸°ì¡´ ë¡œì§ (ë””ë²„ê·¸ ëª¨ë“œê°€ ì•„ë‹ ê²½ìš°)
         if (col.CompareTag("OutOfBound"))
         {
             m_ResultState = Result.ResultState.Foul;
@@ -214,6 +214,7 @@ public class Ball : MonoBehaviour
 
 
     // init ball path
+    /**
     public Vector3 InstantiateBallPath(Pitcher.PitchTypeSO selectedType, Vector3 releasePt, Vector3 targetPt)
     {
         // create bezier curve path
@@ -226,45 +227,88 @@ public class Ball : MonoBehaviour
         m_BallSpeed = selectedType.MaxSpeed;
 
         // making ball speed
-        m_Speed = selectedType.MaxSpeed * ((targetPt - releasePt).magnitude / m_BallPath.PathPoints.Count) * SPEED_CONSTANT;
+        // set up ball max speed
+        m_BallSpeed = selectedType.MaxSpeed;
 
-        // return last ball path
+        
+        float distance = (targetPt - releasePt).magnitude;
+
+
+        float speedMs = selectedType.MaxSpeed;
+        // MaxSpeedê°€ km/hë©´ ì´ê±¸ë¡œ:
+        // float speedMs = selectedType.MaxSpeed / 3.6f;
+
+        float duration = distance / Mathf.Max(0.1f, speedMs);
+
+        speedMs *= selectedType.SpeedMultiplier;
+
+        m_Speed = duration / Mathf.Max(1, (m_BallPath.PathPoints.Count - 1));
+
+        return m_BallPath.PathPoints.Last();
+    }
+    **/
+
+    public Vector3 InstantiateBallPath(Pitcher.PitchTypeSO selectedType, Vector3 releasePt, Vector3 targetPt)
+    {
+        // 1) create bezier curve path
+        m_BallPath = CreatePath(selectedType, releasePt, targetPt);
+        PointCounts = m_BallPath.PathPoints.Count;
+
+        // 2) set up ball max speed
+        m_BallSpeed = selectedType.MaxSpeed;
+
+        // 3) speed (duration-based)
+        float distance = (targetPt - releasePt).magnitude;
+
+        // MaxSpeed ë‹¨ìœ„ê°€ km/hë¼ë©´ ì•„ë˜ ì¤„ë¡œ ë°”ê¾¸ëŠ” ê±¸ ê³ ë ¤
+        float speedMs = selectedType.MaxSpeed;
+        // float speedMs = selectedType.MaxSpeed / 3.6f;
+
+        // ë°©ë²• A: êµ¬ì¢…ë³„ ì†ë„ ë°°ìœ¨
+        speedMs *= selectedType.SpeedMultiplier;
+
+        float duration = distance / Mathf.Max(0.1f, speedMs);
+        m_Speed = duration / Mathf.Max(1, (m_BallPath.PathPoints.Count - 1));
+
+        // 4) debug log (ì—¬ê¸°ê°€ ìœ„ì¹˜!)
+#if UNITY_EDITOR
+    Debug.Log(
+        $"[PITCH] type={selectedType.name} " +
+        $"maxSpeed={selectedType.MaxSpeed:F1} speedMul={selectedType.SpeedMultiplier:F2} " +
+        $"curve={selectedType.CurveOffset:F2} drop={selectedType.DropOffset:F2} breakMul={selectedType.BreakMultiplier:F2} " +
+        $"points={m_BallPath.PathPoints.Count} stepTime={m_Speed:F4}s " +
+        $"release={releasePt} target={targetPt}"
+    );
+#endif
+
+        // 5) return last ball path
         return m_BallPath.PathPoints.Last();
     }
 
     // init bezier path
     public static Bezier CreatePath(Pitcher.PitchTypeSO type, Vector3 releasePt, Vector3 targetPt)
     {
-
-        Vector2 delta = new Vector2(-type.CurveOffset * HORI_MULTIPLIER, -type.DropOffset * VERT_MULTIPLIER);
-
-        // vector between start pt to end pt
         Vector3 dir = targetPt - releasePt;
+        float distance = dir.magnitude;
+        Vector3 forward = dir.normalized;
 
-        // reset control points
-        List<Vector3> ctrlPts = new List<Vector3> { releasePt };
+        // íˆ¬êµ¬ ë°©í–¥ ê¸°ì¤€ right/up (ì›”ë“œì¶• ì˜ì¡´ ì œê±°)
+        Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
+        Vector3 up = Vector3.Cross(forward, right).normalized;
 
-        // cal dis ctrl points
-        // ÀüÃ¼ °Å¸®¸¦ 3µîºĞÇÏ¿© 4°³ÀÇ ÄÁÆ®·Ñ Æ÷ÀÎÆ®·Î ¹èÄ¡
-        float interval = dir.magnitude / (NUM_CTRL_PTS - 1);
+        // âš ï¸ ì—¬ê¸° ê°’ì´ â€œê°â€ì„ ê²°ì •í•¨ (ì²˜ìŒì—” ê³¼ê°íˆ í¬ê²Œ ì¡ê³  ì¤„ì´ëŠ” ê²Œ ë¹ ë¦„)
+        // type.CurveOffset / DropOffsetê°€ ì–´ë–¤ ë‹¨ìœ„ì¸ì§€ ëª¨ë¥´ë‹ˆ ìŠ¤ì¼€ì¼ë¡œ ì¡°ì ˆ
+        float curve = -type.CurveOffset * 0.02f * type.BreakMultiplier;
+        float drop = -type.DropOffset * 0.02f * type.BreakMultiplier;
 
-        // create ctrl points roof
-        for (int i = 1; i < NUM_CTRL_PTS; ++i)
-        {
-            Vector3 previousPts = ctrlPts[i - 1];
+        Vector3 p0 = releasePt;
+        Vector3 p3 = targetPt;
 
-            Vector3 point = previousPts + (dir.normalized * interval);
-            point.y += delta.y * i;
-            if (i > NUM_CTRL_PTS - 2)
-                point.x += delta.x * i;
-            if (i == NUM_CTRL_PTS - 1)
-            {
-                point.x += delta.x * 10;
-            }
-            ctrlPts.Add(point);
-        }
+        // â€œë§‰íŒì— í™• êº¾ì´ê²Œâ€ ë§Œë“¤ê¸°: p2ë¥¼ ê°•í•˜ê²Œ
+        Vector3 p1 = releasePt + forward * (distance * 0.33f) + right * (curve * 0.2f) + up * (drop * 0.2f);
+        Vector3 p2 = releasePt + forward * (distance * 0.66f) + right * (curve * 1.2f) + up * (drop * 1.2f);
 
-        return new Bezier(ctrlPts);
+        return new Bezier(new List<Vector3> { p0, p1, p2, p3 });
     }
 
     ///////////////////////////////////////////////////////////////
@@ -305,7 +349,7 @@ public class Ball : MonoBehaviour
 
                 m_DebugDirection = direction;
 
-                Debug.Log("µğ¹ö±× ¸ğµå: È¨·± ¹ß»ç! °¢µµ: " + (angle * Mathf.Rad2Deg) + "µµ");
+                Debug.Log("ë””ë²„ê·¸ ëª¨ë“œ: í™ˆëŸ° ë°œì‚¬! ê°ë„: " + (angle * Mathf.Rad2Deg) + "ë„");
             }
 
             else

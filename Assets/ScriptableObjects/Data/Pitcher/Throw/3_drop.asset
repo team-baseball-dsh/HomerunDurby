@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 3_drop
   m_EditorClassIdentifier: 
   Name: Fork Ball
-  MaxSpeed: 136
+  MaxSpeed: 60
   CurveOffset: 0
   DropOffset: 10
   Dir: 4
+  SpeedMultiplier: 0.75
+  BreakMultiplier: 5
